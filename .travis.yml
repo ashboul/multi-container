@@ -14,7 +14,7 @@ after_success:
   - docker build -t abdul/multi-container-server ./server
   - docker build -t abdul/multi-container-worker ./worker
   - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push abdul/multi-container-client
-  - docker push abdul/multi-container-proxy
-  - docker push abdul/multi-container-server
-  - docker push abdul/multi-container-worker
+  - docker push abdullahshboul/my-local-repository:abdul/multi-container-client
+  - docker push abdullahshboul/my-local-repository:abdul/multi-container-proxy
+  - docker push abdullahshboul/my-local-repository:abdul/multi-container-server
+  - docker push abdullahshboul/my-local-repository:abdul/multi-container-worker
