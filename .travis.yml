@@ -1,0 +1,32 @@
+language: generic
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t abdul/multi-container-dev -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true abdul/multi-container-dev npm run test -- --coverage
+
+after_success:
+  - docker build -t abdul/multi-container-client ./client
+  - docker build -t abdul/multi-container-proxy ./proxy
+  - docker build -t abdul/multi-container-server ./server
+  - docker build -t abdul/multi-container-worker ./worker
+  - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push abdul/multi-container-client
+  - docker push abdul/multi-container-proxy
+  - docker push abdul/multi-container-server
+  - docker push abdul/multi-container-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'ap-southeast-2'
+  app: 'first-react-ci'
+  env: 'FirstReactCi-env'
+  bucket_name: 'elasticbeanstalk-ap-southeast-2-139876637182'
+  bucket_path: 'first-react-ci'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
