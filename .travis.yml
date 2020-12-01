@@ -9,12 +9,12 @@ script:
   - docker run -e CI=true abdul/multi-container-dev npm run test -- --coverage
 
 after_success:
-  - docker build -t abdul/multi-container-client ./client
-  - docker build -t abdul/multi-container-proxy ./proxy
-  - docker build -t abdul/multi-container-server ./server
-  - docker build -t abdul/multi-container-worker ./worker
+  - docker build -t abdullahshboul/multi-container-client ./client
+  - docker build -t abdullahshboul/multi-container-proxy ./proxy
+  - docker build -t abdullahshboul/multi-container-server ./server
+  - docker build -t abdullahshboul/multi-container-worker ./worker
   - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push abdullahshboul/my-local-repository:abdul/multi-container-client
-  - docker push abdullahshboul/my-local-repository:abdul/multi-container-proxy
-  - docker push abdullahshboul/my-local-repository:abdul/multi-container-server
-  - docker push abdullahshboul/my-local-repository:abdul/multi-container-worker
+  - docker push abdullahshboul/multi-container-client
+  - docker push abdullahshboul/multi-container-server
+  - docker push abdullahshboul/multi-container-proxy
+  - docker push abdullahshboul/multi-container-worker
